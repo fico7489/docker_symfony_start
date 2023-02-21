@@ -6,4 +6,8 @@ docker compose exec php sh
 docker compose exec nginx sh
 docker compose exec mysql sh
 mysql -u root -p"root" -h localhost 
+
+docker compose exec mysql sh
+create database test;
 ```
+
