@@ -2,6 +2,13 @@ name: ${DOCKER_PROJECT_NAME}
 
 services:
 
+  php:
+    container_name: ${DOCKER_PROJECT_NAME}_php
+    user: ${UID:-1000}:${GID:-1000}
+    build: ./.docker/php
+    volumes:
+      - ./:/var/www/html
+
   nginx:
     container_name: ${DOCKER_PROJECT_NAME}_nginx
     build: ./.docker/nginx
@@ -10,12 +17,6 @@ services:
     volumes:
       - ./:/var/www/html
       - ./.docker/nginx/nginx.conf:/etc/nginx/nginx.conf
-
-  php:
-    container_name: ${DOCKER_PROJECT_NAME}_php
-    build: ./.docker/php
-    volumes:
-      - ./:/var/www/html
 
   mysql:
     container_name: ${DOCKER_PROJECT_NAME}_mysql
