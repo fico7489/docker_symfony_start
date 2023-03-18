@@ -24,7 +24,7 @@ class TestController extends AbstractController
         print_r($users);
         echo '</pre>';
 
-        exit('show...');
+        exit('show...test...');
     }
 
     #[Route('/create', name: 'create')]
