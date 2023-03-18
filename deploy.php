@@ -38,23 +38,25 @@ task('deploy', [
 ]);
 
 $writableFolders = [
-    'var',
+    'var/',
 ];
 
 $writableFoldersPermission = '755';
 
 task('custom:vendor_install', function () use ($writableFolders, $writableFoldersPermission) {
 
+
+
     // set up writable folders
-    cd('{{release_path}}');
+    run('cd {{release_path}}');
 
     foreach ($writableFolders as $writableFolder) {
-        run('chmod -R '.$writableFoldersPermission.' '.$writableFolder.';');
+        //run('chmod -R '.$writableFoldersPermission.' '.$writableFolder.';');
     }
 
-    run('docker compose exec php composer install --optimize-autoloader --no-dev;');
+    //run('docker compose exec -w "/var/www/releases/{{release_name}}" php composer install --optimize-autoloader --no-dev;');
 });
 
 task('custom:after_deploy', function () {
-
+    run('cd {{release_path}} && docker compose restart php');
 });
