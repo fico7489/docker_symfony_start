@@ -11,9 +11,30 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TestController extends AbstractController
 {
-    #[Route('/test', name: 'test')]
-    public function test()
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
-        exit('test...');
+    }
+
+    #[Route('/show', name: 'show')]
+    public function show()
+    {
+        $users = $this->entityManager->getRepository(User::class)->findAll();
+
+        echo '<pre>';
+        print_r($users);
+        echo '</pre>';
+
+        exit('show...');
+    }
+
+    #[Route('/create', name: 'create')]
+    public function create()
+    {
+        $user = new User();
+        $user->setFirstName((string)random_int(1, 1000));
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        exit('create...');
     }
 }
