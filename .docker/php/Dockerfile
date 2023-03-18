@@ -1,4 +1,4 @@
-FROM php:8.2.4-alpine3.17
+FROM php:8.2.4-fpm-alpine3.17
 
 # php extensions installer: https://github.com/mlocati/docker-php-extension-installer
 COPY --from=mlocati/php-extension-installer --link /usr/bin/install-php-extensions /usr/local/bin/
