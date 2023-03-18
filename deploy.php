@@ -44,19 +44,22 @@ $writableFolders = [
 $writableFoldersPermission = '755';
 
 task('custom:vendor_install', function () use ($writableFolders, $writableFoldersPermission) {
-
-
+    //move to release patch
+    cd('{{release_path}}');
 
     // set up writable folders
-    run('cd {{release_path}}');
-
     foreach ($writableFolders as $writableFolder) {
         //run('chmod -R '.$writableFoldersPermission.' '.$writableFolder.';');
     }
 
-    //run('docker compose exec -w "/var/www/releases/{{release_name}}" php composer install --optimize-autoloader --no-dev;');
+    run('docker compose exec -w "/var/www/releases/{{release_name}}" php composer install --optimize-autoloader --no-dev;');
+
+    //TODO migrate, opcache and other
 });
 
 task('custom:after_deploy', function () {
-    run('cd {{release_path}} && docker compose restart php');
+    cd('{{release_path}}');
+    run('docker compose restart php');
 });
+
+
